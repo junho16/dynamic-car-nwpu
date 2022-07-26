@@ -2,8 +2,9 @@ server:
   port: 9092
 websocket:
   server:
+    ip: 127.0.0.1
     port: 8888
-
+    suffix: /cps/dyncar
 
 
 #  ======================

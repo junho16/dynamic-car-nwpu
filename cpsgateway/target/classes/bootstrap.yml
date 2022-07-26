@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: 'dev'
+  application:
+    name: cpsgateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.server-addr}
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: test
+          uri: lb://cpsruntimeservice
+          predicates:
+            - Path=/gatewayTest/**
+          filters:
+            - StripPrefix=1
+
+
+

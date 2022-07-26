@@ -1,7 +1,6 @@
 package cps.device.onenetapi.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import java.lang.String;
 
 public class DrivingSuggestStructDTO {
   @JSONField(

@@ -64,16 +64,6 @@
                 "step": "0.00001"
               }
             }
-          },
-          {
-            "identifier": "suggest",
-            "name": "实时车辆建议",
-            "dataType": {
-              "type": "string",
-              "specs": {
-                "length": 256
-              }
-            }
           }
         ]
       }

@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Junho
  * @date 2022/7/26 15:29
  */
-public class DynCarManager {
+public class DynCarChannelManager {
 
     private static ChannelGroup GlobalGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
@@ -25,19 +25,33 @@ public class DynCarManager {
 
     /**
      * 在建立连接后首次通信 即 创建websocket时记录channel
+     * key:userid ; value:channel
      */
     private static ConcurrentMap<String, Channel> ChannelMap = new ConcurrentHashMap();
 
+    /**
+     * 在建立连接后首次通信 即 创建websocket时 逆向记录channel
+     * key:channel ; value:userid
+     */
+    private static ConcurrentMap<Channel,String> UserMap = new ConcurrentHashMap();
+
     public static void addChannel(String userKey , Channel channel){
         ChannelMap.put(userKey , channel);
+        UserMap.put(channel , userKey);
     }
 
-    public static void removeChannel(String userKey){
+    public static void removeChannel(Channel userChannel){
+        String userKey = UserMap.get(userChannel);
         ChannelMap.remove(userKey);
+        UserMap.remove(userChannel);
     }
 
     public static Channel findChannel(String userKey){
         return ChannelMap.get(userKey);
+    }
+
+    public static String findUserId(Channel userChannel){
+        return UserMap.get(userChannel);
     }
 
     public static void addChannelId(Channel channel){

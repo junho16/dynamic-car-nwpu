@@ -1,0 +1,82 @@
+{
+  "properties" : [ {
+    "identifier" : "latiTude",
+    "name" : "纬度",
+    "functionType" : "u",
+    "accessMode" : "rw",
+    "functionMode" : "property",
+    "desc" : "维度",
+    "dataType" : {
+      "type" : "string",
+      "specs" : {
+        "length" : "255"
+      }
+    }
+  }, {
+    "identifier" : "longiTude",
+    "name" : "经度",
+    "functionType" : "u",
+    "accessMode" : "rw",
+    "functionMode" : "property",
+    "desc" : "经度数据",
+    "dataType" : {
+      "type" : "string",
+      "specs" : {
+        "length" : "255"
+      }
+    }
+  }, {
+    "identifier" : "runningState",
+    "name" : "运行状态",
+    "functionType" : "u",
+    "accessMode" : "rw",
+    "functionMode" : "property",
+    "desc" : "设备的运行情况",
+    "dataType" : {
+      "type" : "enum",
+      "specs" : {
+        "0" : "运行中_ON",
+        "1" : "停止_OFF"
+      }
+    }
+  } ],
+  "events" : [ {
+    "identifier" : "LOS_Warning",
+    "name" : "信号丢失",
+    "desc" : "描述位置信号信息",
+    "functionMode" : "event",
+    "outputData" : [ {
+      "identifier" : "message",
+      "name" : "位置信号",
+      "dataType" : {
+        "type" : "string",
+        "specs" : {
+          "length" : "255"
+        }
+      }
+    } ],
+    "functionType" : "u",
+    "eventType" : "alert"
+  } ],
+  "services" : [ {
+    "name" : "位置设备控制",
+    "identifier" : "gpsStateControl",
+    "functionType" : "u",
+    "functionMode" : "service",
+    "desc" : "gps设备状态控制",
+    "callType" : "a",
+    "input" : [ {
+      "identifier" : "gpsState",
+      "name" : "设备状态控制",
+      "dataType" : {
+        "type" : "enum",
+        "specs" : {
+          "0" : "启动",
+          "1" : "停止",
+          "2" : "重启"
+        }
+      }
+    } ],
+    "output" : [ ]
+  } ]
+}

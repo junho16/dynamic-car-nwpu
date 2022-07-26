@@ -3,9 +3,9 @@ package cps.device.onenetapi;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.onenet.studio.acc.sdk.OpenApi;
+import com.onenet.studio.acc.sdk.dto.DrivingSuggestStructDTO;
+import com.onenet.studio.acc.sdk.dto.DynCarListStructDTO;
 import com.onenet.studio.acc.sdk.interfaces.OpenApiCallback;
-import cps.device.onenetapi.dto.DrivingSuggestStructDTO;
-import cps.device.onenetapi.dto.DynCarListStructDTO;
 
 import java.lang.Exception;
 import java.lang.Integer;
@@ -48,7 +48,7 @@ public class DynCarOpenApiExtention {
      *  @param DynCarList 标识符为DynCarList的属性功能点的值
      *  @param timeout 超时时间，单位为毫秒
      */
-    public int DynCarListPropertyUpload(DynCarListStructDTO DynCarList, long timeout) throws
+    public int DynCarListPropertyUpload(com.onenet.studio.acc.sdk.dto.DynCarListStructDTO DynCarList, long timeout) throws
             Exception {
         return this.propertyUpload(timeout, DynCarList);
     }
@@ -68,10 +68,10 @@ public class DynCarOpenApiExtention {
         oneJson.put(ONEJSON_VERSION_KEY, ONEJSON_VERSION_VAL);
         Map<String, Object> params = new HashMap<>();
         if (!Objects.isNull(JSON.toJSON(DynCarList))) {
-                Map<String, Object> val1 = new HashMap<>();
-                val1.put("value", JSON.toJSON(DynCarList));
-                val1.put("time", now);
-                params.put("DynCarList", val1);
+            Map<String, Object> val1 = new HashMap<>();
+            val1.put("value", JSON.toJSON(DynCarList));
+            val1.put("time", now);
+            params.put("DynCarList", val1);
         }
         oneJson.put("params", params);
         String oneJsonStr = JSON.toJSONString(oneJson);
@@ -187,10 +187,10 @@ public class DynCarOpenApiExtention {
         oneJson.put(ONEJSON_VERSION_KEY, ONEJSON_VERSION_VAL);
         Map<String, Object> params = new HashMap<>();
         if (!Objects.isNull(DrivingSuggest)) {
-                Map<String, Object> val1 = new HashMap<>();
-                val1.put("value", JSON.toJSON(DrivingSuggest));
-                val1.put("time", now);
-                params.put("DrivingSuggest", val1);
+            Map<String, Object> val1 = new HashMap<>();
+            val1.put("value", JSON.toJSON(DrivingSuggest));
+            val1.put("time", now);
+            params.put("DrivingSuggest", val1);
         }
         oneJson.put("params", params);
         String oneJsonStr = JSON.toJSONString(oneJson);

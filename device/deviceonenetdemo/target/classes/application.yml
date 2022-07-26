@@ -1,0 +1,12 @@
+server:
+  port: 8090
+
+devices:
+  bean:
+    url: tcp://218.201.45.7:1883
+    gps_filename: /gpsDevice.json
+    bdgps_filename: /bdDevice.json
+    engine_filename: /engineDevice.json
+    gps_product_id: 710r9BWp9V
+    bdgps_product_id: 5P2quw1MIt
+    engine_product_id: 5f5cUXBTC7

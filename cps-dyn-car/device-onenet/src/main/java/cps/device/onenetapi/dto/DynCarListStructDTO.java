@@ -1,8 +1,6 @@
 package cps.device.onenetapi.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import java.lang.Double;
-import java.lang.String;
 
 public class DynCarListStructDTO {
   @JSONField(
@@ -25,11 +23,6 @@ public class DynCarListStructDTO {
   )
   private Double speed;
 
-  @JSONField(
-      name = "suggest"
-  )
-  private String suggest;
-
   public void setRid(String rid) {
     this.rid = rid;
   }
@@ -46,10 +39,6 @@ public class DynCarListStructDTO {
     this.speed = speed;
   }
 
-  public void setSuggest(String suggest) {
-    this.suggest = suggest;
-  }
-
   public String getRid() {
     return this.rid;
   }
@@ -64,9 +53,5 @@ public class DynCarListStructDTO {
 
   public Double getSpeed() {
     return this.speed;
-  }
-
-  public String getSuggest() {
-    return this.suggest;
   }
 }
