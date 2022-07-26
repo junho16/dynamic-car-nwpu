@@ -1,0 +1,158 @@
+{
+  "properties" : [ {
+    "identifier" : "$GeoLocation",
+    "name" : "地理位置",
+    "functionType" : "s",
+    "accessMode" : "r",
+    "functionMode" : "property",
+    "desc" : "",
+    "dataType" : {
+      "type" : "struct",
+      "specs" : [ {
+        "identifier" : "longitude",
+        "name" : "经度",
+        "dataType" : {
+          "type" : "double",
+          "specs" : {
+            "min" : "-180",
+            "max" : "180",
+            "unit" : "度 / °",
+            "step" : null
+          }
+        }
+      }, {
+        "identifier" : "latitude",
+        "name" : "纬度",
+        "dataType" : {
+          "type" : "double",
+          "specs" : {
+            "min" : "-90",
+            "max" : "90",
+            "unit" : "度 / °",
+            "step" : null
+          }
+        }
+      }, {
+        "identifier" : "altitude",
+        "name" : "海拔",
+        "dataType" : {
+          "type" : "double",
+          "specs" : {
+            "min" : "-9999",
+            "max" : "9999",
+            "unit" : "米 / m",
+            "step" : null
+          }
+        }
+      }, {
+        "identifier" : "coordinateSystem",
+        "name" : "坐标系统",
+        "dataType" : {
+          "type" : "enum",
+          "specs" : {
+            "1" : "WGS-84",
+            "2" : "GCJ-02",
+            "3" : "CGCS2000"
+          }
+        }
+      } ]
+    }
+  }, {
+    "identifier" : "latiTudeBD",
+    "name" : "纬度",
+    "functionType" : "u",
+    "accessMode" : "rw",
+    "functionMode" : "property",
+    "desc" : null,
+    "dataType" : {
+      "type" : "string",
+      "specs" : {
+        "length" : "256"
+      }
+    }
+  }, {
+    "identifier" : "longiTudeBD",
+    "name" : "经度",
+    "functionType" : "u",
+    "accessMode" : "rw",
+    "functionMode" : "property",
+    "desc" : null,
+    "dataType" : {
+      "type" : "string",
+      "specs" : {
+        "length" : "255"
+      }
+    }
+  }, {
+    "identifier" : "runningStateBD",
+    "name" : "运行状态",
+    "functionType" : "u",
+    "accessMode" : "rw",
+    "functionMode" : "property",
+    "desc" : null,
+    "dataType" : {
+      "type" : "enum",
+      "specs" : {
+        "0" : "启动_ON",
+        "1" : "停止_OFF"
+      }
+    }
+  } ],
+  "events" : [ {
+    "identifier" : "LOS_Warning_BD",
+    "name" : "信号丢失",
+    "desc" : null,
+    "functionMode" : "event",
+    "outputData" : [ {
+      "identifier" : "message",
+      "name" : "位置信号",
+      "dataType" : {
+        "type" : "string",
+        "specs" : {
+          "length" : "255"
+        }
+      }
+    }, {
+      "identifier" : "local",
+      "name" : "位置",
+      "dataType" : {
+        "type" : "string",
+        "specs" : {
+          "length" : "255"
+        }
+      }
+    } ],
+    "functionType" : "u",
+    "eventType" : "alert"
+  } ],
+  "services" : [ {
+    "name" : "位置设备控制",
+    "identifier" : "gpsStateControlBD",
+    "functionType" : "u",
+    "functionMode" : "service",
+    "desc" : null,
+    "callType" : "a",
+    "input" : [ {
+      "identifier" : "gpsStateBD",
+      "name" : "设备状态控制",
+      "dataType" : {
+        "type" : "enum",
+        "specs" : {
+          "0" : "启动",
+          "1" : "停止",
+          "2" : "重启"
+        }
+      }
+    } ],
+    "output" : [ {
+      "identifier" : "outParam",
+      "name" : "出参",
+      "dataType" : {
+        "type" : "string",
+        "specs" : {
+          "length" : "255"
+        }
+      }
+    } ]
+  } ]
+}

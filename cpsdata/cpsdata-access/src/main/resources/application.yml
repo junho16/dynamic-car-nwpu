@@ -1,0 +1,11 @@
+server:
+  port: 8095
+
+logging:
+  level:
+    root: ERROR
+    org:
+      springframework:
+        security: WARN
+        web: WARN
+    cps: INFO

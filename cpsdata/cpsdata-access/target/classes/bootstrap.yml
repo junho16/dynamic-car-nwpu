@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: 'dev'
+  application:
+    name: cpsdataaccess
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.server-addr}
+        file-extension: yaml
+        extension-configs:
+          - data-id: nacos-config.yaml
+            refresh: true
+
+          - data-id: cpsdataaccess-config.yaml
+            group: CPSDATAACCESS
+            refresh: true

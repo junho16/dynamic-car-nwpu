@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:CpsGateWay
+spec:
+  selector:
+    app: CpsGateWay
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8088
+      targetPort: 8088
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: CpsGateWay
+  labels:
+    app: CpsGateWay
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: CpsGateWay
+  template:
+    metadata:
+      labels:
+        app: CpsGateWay
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: maven
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 8088

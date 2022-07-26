@@ -1,0 +1,44 @@
+[
+  {
+    "productId": "0P4d6cee10",
+    "deviceType": "thSensor",
+    "deviceAttrs": [
+      "status",
+      "CurrentTemperature",
+      "CurrentHumidity"
+    ],
+    "deviceAffairs": [
+      "TempAlarm",
+      "HumAlarm",
+      "RunAlarm"
+    ]
+  },
+  {
+    "productId": "pbrc1g68cp",
+    "deviceType": "acControl",
+    "deviceAttrs": [
+      "status",
+      "CurrentTemperature",
+      "CurrentHumidity",
+      "PowerSwitch",
+      "TargetTemperature",
+      "TargetHumidity",
+      "AirVolume",
+      "WorkMode"
+    ],
+    "deviceAffairs": [
+      "RunAlarm"
+    ]
+  },
+  {
+    "productId": "7e6DFz0zgU",
+    "deviceType": "powerCollector",
+    "deviceAttrs": [
+      "status",
+      "ActualPower"
+    ],
+    "deviceAffairs": [
+      "RunAlarm"
+    ]
+  }
+]

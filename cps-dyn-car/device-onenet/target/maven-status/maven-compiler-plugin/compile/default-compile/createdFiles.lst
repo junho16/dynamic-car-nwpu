@@ -1,0 +1,4 @@
+cps\device\DeviceOnenetApplication.class
+com\onenet\studio\acc\sdk\OpenApiExtention.class
+com\onenet\studio\acc\sdk\dto\DynCarListStructDTO.class
+com\onenet\studio\acc\sdk\dto\DrivingSuggestStructDTO.class

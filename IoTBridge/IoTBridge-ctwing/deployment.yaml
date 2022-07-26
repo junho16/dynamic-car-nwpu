@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:LogBridgeCtWing
+spec:
+  selector:
+    app: LogBridgeCtWing
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: LogBridgeCtWing
+  labels:
+    app: LogBridgeCtWing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: LogBridgeCtWing
+  template:
+    metadata:
+      labels:
+        app: LogBridgeCtWing
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: maven
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 8082

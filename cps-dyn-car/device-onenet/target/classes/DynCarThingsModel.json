@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "profile": {
+    "industryId": "1",
+    "sceneId": "14",
+    "categoryId": "285",
+    "productId": "YRYD3pEArM"
+  },
+  "properties": [
+    {
+      "identifier": "DynCarList",
+      "name": "动态车辆列表",
+      "functionType": "u",
+      "accessMode": "rw",
+      "desc": "",
+      "dataType": {
+        "type": "struct",
+        "specs": [
+          {
+            "identifier": "rid",
+            "name": "实时车辆id",
+            "dataType": {
+              "type": "string",
+              "specs": {
+                "length": 256
+              }
+            }
+          },
+          {
+            "identifier": "lon",
+            "name": "实时车辆经度",
+            "dataType": {
+              "type": "double",
+              "specs": {
+                "min": "-180",
+                "max": "180",
+                "unit": "度 / °",
+                "step": "0.0000000000000001"
+              }
+            }
+          },
+          {
+            "identifier": "lat",
+            "name": "实时车辆纬度",
+            "dataType": {
+              "type": "double",
+              "specs": {
+                "min": "-90",
+                "max": "90",
+                "unit": "度 / °",
+                "step": "0.0000000000000001"
+              }
+            }
+          },
+          {
+            "identifier": "speed",
+            "name": "实时车辆速度",
+            "dataType": {
+              "type": "double",
+              "specs": {
+                "min": "0",
+                "max": "200",
+                "unit": "米每秒 / m/s",
+                "step": "0.00001"
+              }
+            }
+          },
+          {
+            "identifier": "suggest",
+            "name": "实时车辆建议",
+            "dataType": {
+              "type": "string",
+              "specs": {
+                "length": 256
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "events": [
+    {
+      "identifier": "DrivingSuggest",
+      "name": "实时车辆行车建议",
+      "functionType": "u",
+      "eventType": "info",
+      "desc": "",
+      "outputData": [
+        {
+          "identifier": "suggestMsg",
+          "name": "车辆行驶建议",
+          "dataType": {
+            "type": "string",
+            "specs": {
+              "length": 256
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "services": []
+}

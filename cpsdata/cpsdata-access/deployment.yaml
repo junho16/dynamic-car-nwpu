@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:CpsDataAccess
+spec:
+  selector:
+    app: CpsDataAccess
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8095
+      targetPort: 8095
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: CpsDataAccess
+  labels:
+    app: CpsDataAccess
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: CpsDataAccess
+  template:
+    metadata:
+      labels:
+        app: CpsDataAccess
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: maven
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 8095

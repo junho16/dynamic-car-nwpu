@@ -1,0 +1,72 @@
+{
+  "0P4d6cee10": {
+    "deviceType": "thSensor",
+    "attributes":[
+      {
+        "attributeName": "onLineState",
+        "iotAttributeName": "status",
+        "dataType":"String",
+        "aliasName": "上线状态"
+      },
+      {
+        "attributeName": "currentHumidity",
+        "iotAttributeName": "CurrentHumidity",
+        "dataType":"double",
+        "aliasName": "当前湿度"
+      },
+      {
+        "attributeName": "currentTemperature",
+        "iotAttributeName": "CurrentTemperature",
+        "dataType":"double",
+        "aliasName": "当前温度"
+      },
+      {
+        "attributeName": "maxHumSet",
+        "iotAttributeName": "MaxHumSet",
+        "dataType":"int",
+        "aliasName": "湿度上限设置"
+      },
+      {
+        "attributeName": "maxTempSet",
+        "iotAttributeName": "MaxTempSet",
+        "dataType":"float",
+        "aliasName": "温度上限设置"
+      },
+      {
+        "attributeName": "miniHumSet",
+        "iotAttributeName": "MiniHumSet",
+        "dataType":"int",
+        "aliasName": "湿度下限设置"
+      },
+      {
+        "attributeName": "miniTempSet",
+        "iotAttributeName": "MiniTempSet",
+        "dataType":"float",
+        "aliasName": "温度下限设置"
+      }
+    ],
+    "affairs":[
+      {
+        "affairName": "humAlarm",
+        "iotAffairName":"HumAlarm",
+        "dataType":"String",
+        "aliasName": "湿度告警"
+      },
+      {
+        "affairName": "tempAlarm",
+        "iotAffairName":"TempAlarm",
+        "dataType":"String",
+        "aliasName": "温度告警"
+      },
+      {
+        "affairName": "runAlarm",
+        "iotAffairName":"RunAlarm",
+        "dataType":"String",
+        "aliasName": "运行告警"
+      }
+    ],
+    "actions":[
+    ]
+  }
+
+}

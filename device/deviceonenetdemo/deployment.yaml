@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:DeviceOneNetDemo
+spec:
+  selector:
+    app: DeviceOneNetDemo
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8090
+      targetPort: 8090
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: DeviceOneNetDemo
+  labels:
+    app: DeviceOneNetDemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: DeviceOneNetDemo
+  template:
+    metadata:
+      labels:
+        app: DeviceOneNetDemo
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: maven
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 8090

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cps.cpsruntimeservice.dao.CPSMetaMapper">
+
+    <!-- CPSMetaEntity数据返回值 -->
+    <resultMap id="cpsMetaEntityBaseResultMap" type="cps.cpsruntimeservice.dto.CPSMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="listener_class_name" property="listenerClassName"/>
+        <result column="object_name" property="objectName"/>
+        <result column="organization" property="organization"/>
+        <result column="use_organization" property="useOrganization"/>
+        <result column="version" property="version"/>
+        <result column="scene" property="scene"/>
+        <result column="industry" property="industry"/>
+        <result column="category" property="category"/>
+        <result column="technical_category" property="technicalCategory"/>
+        <result column="field" property="field"/>
+        <result column="description" property="description"/>
+        <result column="management_status" property="managementStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="delete_flag" property="deleteFlag"/>
+    </resultMap>
+
+    <!-- CPSAttributeMetaEntity数据返回值 -->
+    <resultMap id="cpsAttributeMetaEntityResultMap" type="cps.cpsruntimeservice.dto.CPSAttributeMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="cps_id" property="cpsId"/>
+        <result column="cp_attribute_id" property="cpAttributeId"/>
+        <result column="cp_attribute_name" property="cpAttributeName"/>
+        <result column="cp_name" property="cpName"/>
+        <result column="data_type" property="dataType"/>
+        <result column="attribute_type" property="attributeType"/>
+        <result column="default_value" property="defaultValue"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- CPSAffairMetaEntity数据返回值 -->
+    <resultMap id="cpsAffairMetaEntityResultMap" type="cps.cpsruntimeservice.dto.CPSAffairMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="cps_id" property="cpsId"/>
+        <result column="cp_affair_id" property="cpAffairId"/>
+        <result column="cp_affair_name" property="cpAffairName"/>
+        <result column="cp_name" property="cpName"/>
+        <result column="affair_type" property="affairType"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- CPSActionMetaEntity数据返回值 -->
+    <resultMap id="cpsActionMetaEntityResultMap" type="cps.cpsruntimeservice.dto.CPSActionMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="cps_id" property="cpsId"/>
+        <result column="cp_action_id" property="cpActionId"/>
+        <result column="cp_action_name" property="cpActionName"/>
+        <result column="cp_name" property="cpName"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- CPSMetaCPMetaEntity数据返回值 -->
+    <resultMap id="cpsMetaCPMetaEntityResultMap" type="cps.cpsruntimeservice.dto.CPSMetaCPMetaEntity">
+        <id column="id" property="id"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="cps_id" property="cpsId"/>
+        <result column="cp_id" property="cpId"/>
+        <result column="cp_name" property="cpName"/>
+        <result column="listener_class_name" property="listenerClassName"/>
+    </resultMap>
+
+    <!-- 根据id查询CPS元数据 -->
+    <select id="selectCPSMetaEntityById" resultMap="cpsMetaEntityBaseResultMap">
+        SELECT
+            id,
+            `name`,
+            listener_class_name,
+            object_name,
+            organization,
+            use_organization,
+            version,
+            scene,
+            industry,
+            category,
+            technical_category,
+            field,
+            description,
+            management_status,
+            create_time,
+            create_user,
+            update_time,
+            update_user,
+            delete_flag
+        FROM
+            `cpsmeta`
+        WHERE delete_flag = 'inuse' AND id = #{id};
+    </select>
+
+    <!-- 根据cpsId查询关联的cps属性元数据 -->
+    <select id="selectCPSAttributeMetaEntityByCPSId" resultMap="cpsAttributeMetaEntityResultMap">
+        SELECT
+            cps_attr.id,
+            cps_attr.`name`,
+            cps_attr.alias_name,
+            cps_attr.data_type,
+            cps_attr.cps_id,
+            cps_attr.cp_attribute_id,
+            cp_attr.`name` AS cp_attribute_name,
+            cps_cp.cp_name AS cp_name,
+            cps_attr.attribute_type,
+            cps_attr.default_value,
+            cps_attr.rule_category,
+            cps_attr.rule_content
+        FROM
+            `cps_attributemeta` cps_attr
+            LEFT JOIN cp_attributemeta cp_attr ON cps_attr.cp_attribute_id = cp_attr.id
+            LEFT JOIN cpsmeta_cpmeta cps_cp ON cps_attr.cps_id = cps_cp.cps_id
+            AND cps_cp.cp_id = cp_attr.cp_id
+        WHERE
+            cps_attr.cps_id = #{_parameter};
+    </select>
+
+    <!-- 根据cpsId查询关联的cps事件元数据 -->
+    <select id="selectCPSAffairMetaEntityByCPSId" resultMap="cpsAffairMetaEntityResultMap">
+        SELECT
+            cps_affair.id,
+            cps_affair.`name`,
+            cps_affair.alias_name,
+            cps_affair.cps_id,
+            cps_affair.cp_affair_id,
+            cp_affair.`name` AS cp_affair_name,
+            cps_cp.cp_name AS cp_name,
+            cps_affair.affair_type,
+            cps_affair.rule_category,
+            cps_affair.rule_content
+        FROM
+            `cps_affairmeta` cps_affair
+        LEFT JOIN cp_affairmeta cp_affair ON cps_affair.cp_affair_id = cp_affair.id
+        LEFT JOIN cpsmeta_cpmeta cps_cp ON cps_affair.cps_id = cps_cp.cps_id
+        AND cps_cp.cp_id = cp_affair.cp_id
+        WHERE
+            cps_affair.cps_id = #{_parameter};
+    </select>
+
+    <!-- 根据cpsId查询关联的cps操作元数据 -->
+    <select id="selectCPSActionMetaEntityByCPSId" resultMap="cpsActionMetaEntityResultMap">
+        SELECT
+            cps_action.id,
+            cps_action.`name`,
+            cps_action.alias_name,
+            cps_action.cps_id,
+            cps_action.cp_action_id,
+            cp_action.`name` AS cp_action_name,
+            cps_cp.cp_name AS cp_name,
+            cps_action.rule_category,
+            cps_action.rule_content
+        FROM
+            `cps_actionmeta` cps_action
+        LEFT JOIN cp_actionmeta cp_action ON cps_action.cp_action_id = cp_action.id
+        LEFT JOIN cpsmeta_cpmeta cps_cp ON cps_action.cps_id = cps_cp.cps_id
+        AND cps_cp.cp_id = cp_action.cp_id
+        WHERE
+            cps_action.cps_id = #{_parameter};
+    </select>
+
+    <!-- 根据cpsId查询关联的cp元数据 -->
+    <select id="selectCPSMetaCPMetaEntityByCPSId" resultMap="cpsMetaCPMetaEntityResultMap">
+        SELECT
+            cps_cp.id,
+            cps_cp.alias_name,
+            cps_cp.cps_id,
+            cps_cp.cp_id,
+            cps_cp.cp_name,
+            listener_class_name
+        FROM
+            `cpsmeta_cpmeta` cps_cp
+        WHERE cps_cp.cps_id = #{_parameter};
+    </select>
+
+    <!-- 根据设备元数据id和设备事件名称查询关联的cps，cp元数据id以及关联事件相关信息 -->
+    <select id="selectCPSMetaListByDeviceIdAndAffairName" resultType="cps.cpsruntimeservice.dto.DeviceRelatedEntity">
+        SELECT
+            cps_cp.cps_id AS cpsUuid,
+            cps_aff.id AS cpsAffairUuid,
+            cps_aff.`name` AS cpsAffairName,
+            cps_cp.cp_id AS cpUuid,
+            cp_aff.id AS cpAffairUuid,
+            cp_aff.`name` AS cpAffairName,
+            cp_d.device_id AS deviceUuid,
+            d_aff.id AS deviceAffairUuid,
+            d_aff.`name` AS deviceAffairName
+        FROM
+            `cpsmeta_cpmeta` cps_cp
+        LEFT JOIN cpmeta_devicemeta cp_d ON cps_cp.cp_id = cp_d.cp_id
+        LEFT JOIN device_affairmeta d_aff ON d_aff.device_id = cp_d.device_id
+        LEFT JOIN cp_affairmeta cp_aff ON cp_aff.device_affair_id = d_aff.id
+        LEFT JOIN cps_affairmeta cps_aff ON cps_aff.cp_affair_id = cp_aff.id
+        WHERE
+            cp_d.device_id = #{deviceId} AND d_aff.`name` = #{deviceAffairName};
+    </select>
+
+    <!-- 根据设备元数据id和设备属性名称查询关联的cps，cp元数据id以及关联属性相关信息 -->
+    <select id="selectCPSMetaListByDeviceIdAndAttributeName" resultType="cps.cpsruntimeservice.dto.DeviceRelatedEntity">
+        SELECT
+            cps_cp.cps_id AS cpsUuid,
+            cps_attr.id AS cpsAttributeUuid,
+            cps_attr.`name` AS cpsAttributeName,
+            cps_cp.cp_id AS cpUuid,
+            cp_attr.id AS cpAttributeUuid,
+            cp_attr.`name` AS cpAttributeName,
+            cp_d.device_id AS deviceUuid,
+            d_attr.id AS deviceAttributeUuid,
+            d_attr.`name` AS deviceAttributeName
+        FROM
+            `cpsmeta_cpmeta` cps_cp
+        LEFT JOIN cpmeta_devicemeta cp_d ON cps_cp.cp_id = cp_d.cp_id
+        LEFT JOIN device_attributemeta d_attr ON d_attr.device_id = cp_d.device_id
+        LEFT JOIN cp_attributemeta cp_attr ON cp_attr.device_attribute_id = d_attr.id
+        LEFT JOIN cps_attributemeta cps_attr ON cps_attr.cp_attribute_id = cp_attr.id
+        WHERE
+            cp_d.device_id = #{deviceId} AND d_attr.`name` = #{deviceAttributeName};
+    </select>
+
+    <update id="updateCPSMetaEntity" parameterType="cps.cpsruntimeservice.dto.CPSMetaEntity">
+        update cpsmeta
+        <set>
+            <if test="name!=null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="listenerClassName!=null and listenerClassName!=''">
+                listener_class_name = #{listenerClassName},
+            </if>
+            <if test="objectName!=null and objectName!=''">
+                object_name = #{objectName},
+            </if>
+            <if test="organization!=null and organization!=''">
+                organization = #{organization},
+            </if>
+            <if test="useOrganization!=null and useOrganization!=''">
+                use_organization = #{useOrganization},
+            </if>
+            <if test="version!=null and version!=''">
+                version = #{version},
+            </if>
+            <if test="industry!=null and industry!=''">
+                industry = #{industry},
+            </if>
+            <if test="technicalCategory!=null and technicalCategory!=''">
+                technical_category = #{technicalCategory},
+            </if>
+            <if test="field!=null and field!=''">
+                field = #{field},
+            </if>
+            <if test="description!=null and description!=''">
+                description = #{description},
+            </if>
+            <if test="managementStatus!=null and managementStatus!=''">
+                management_status = #{managementStatus},
+            </if>
+            <if test="createTime!=null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUser!=null and createUser!=''">
+                create_user = #{createUser},
+            </if>
+            <if test="updateTime!=null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser!=null and updateUser!=''">
+                update_user = #{updateUser},
+            </if>
+            <if test="deleteFlag!=null and deleteFlag!=''">
+                delete_flag = #{deleteFlag},
+            </if>
+        </set>
+        where 1=1
+        <if test="id!=null">
+            and id=#{id}
+        </if>
+    </update>
+
+    <!-- 根据条件获取事件ID集合 -->
+    <select id="getCpsAffairIdListByParam" resultType="java.lang.String">
+        SELECT
+            cps_affairmeta.id
+        FROM
+            cpsmeta
+            LEFT JOIN cps_affairmeta ON cpsmeta.id = cps_affairmeta.cps_id
+        WHERE 1=1
+            <if test="scene!=null and scene!=''">
+                and cpsmeta.scene  = #{scene}
+            </if>
+            <if test="industry!=null and industry!=''">
+                and cpsmeta.industry  = #{industry}
+            </if>
+            <if test="category!=null and category!=''">
+                and cpsmeta.category  = #{category}
+            </if>
+            <if test="cpsUuid!=null and cpsUuid!=''">
+                and cpsmeta.id  = #{cpsUuid}
+            </if>
+            <if test="affairName!=null and affairName!=''">
+                and cps_affairmeta.`name`  = #{affairName}
+            </if>
+    </select>
+</mapper>

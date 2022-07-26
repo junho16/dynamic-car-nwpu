@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="cpsdata-access" />
+        <module name="cpsruntime-ui" />
+        <module name="cpsgateway" />
+        <module name="sccps-api" />
+        <module name="iotbridge-api" />
+        <module name="iotbridge-ctwing" />
+        <module name="cpsstudio-ml" />
+        <module name="cpsruntime-api" />
+        <module name="deviceonenetdemo" />
+        <module name="cpsruntime-service" />
+        <module name="device-onenet" />
+        <module name="cpsstudio-ui" />
+        <module name="cpsstudio-service" />
+        <module name="iotbridge-onenet" />
+        <module name="cpsdata-api" />
+        <module name="dyn-cps-app" />
+        <module name="device-api" />
+        <module name="cpsruntime-api-imp" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="untitled" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

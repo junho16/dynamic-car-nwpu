@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cps.cpsruntimeservice.dao.CPMetaMapper">
+
+    <!-- CPMetaEntity数据返回值 -->
+    <resultMap id="cpMetaEntityBaseResultMap" type="cps.cpsruntimeservice.dto.CPMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="cp_type" property="cpType"/>
+        <result column="listener_class_name" property="listenerClassName"/>
+        <result column="object_name" property="objectName"/>
+        <result column="organization" property="organization"/>
+        <result column="use_organization" property="useOrganization"/>
+        <result column="field" property="field"/>
+        <result column="technical_category" property="technicalCategory"/>
+        <result column="tags" property="tags"/>
+        <result column="description" property="description"/>
+        <result column="management_status" property="managementStatus"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="delete_flag" property="deleteFlag"/>
+    </resultMap>
+
+    <!-- CPAttributeMetaEntity数据返回值 -->
+    <resultMap id="cpAttributeMetaEntityResultMap" type="cps.cpsruntimeservice.dto.CPAttributeMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="data_type" property="dataType"/>
+        <result column="cp_id" property="cpId"/>
+        <result column="device_attribute_id" property="deviceAttributeId"/>
+        <result column="device_attribute_name" property="deviceAttributeName"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="attribute_type" property="attributeType"/>
+        <result column="default_value" property="defaultValue"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- CPAffairMetaEntity数据返回值 -->
+    <resultMap id="cpAffairMetaEntityResultMap" type="cps.cpsruntimeservice.dto.CPAffairMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="data_type" property="dataType"/>
+        <result column="cp_id" property="cpId"/>
+        <result column="device_affair_id" property="deviceAffairId"/>
+        <result column="device_affair_name" property="deviceAffairName"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="affair_type" property="affairType"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- CPActionMetaEntity数据返回值 -->
+    <resultMap id="cpActionMetaEntityResultMap" type="cps.cpsruntimeservice.dto.CPActionMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="data_type" property="dataType"/>
+        <result column="cp_id" property="cpId"/>
+        <result column="device_action_id" property="deviceActionId"/>
+        <result column="device_action_name" property="deviceActionName"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- CPMetaDeviceMetaEntity数据返回值 -->
+    <resultMap id="cpMetaDeviceMetaEntityResultMap" type="cps.cpsruntimeservice.dto.CPMetaDeviceMetaEntity">
+        <id column="id" property="id"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="cp_id" property="cpId"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="listener_class_name" property="listenerClassName"/>
+    </resultMap>
+
+    <!-- 根据id查询CP元数据 -->
+    <select id="selectCPMetaEntityById" resultMap="cpMetaEntityBaseResultMap">
+        SELECT
+            id,
+            `name`,
+            cp_type,
+            listener_class_name,
+            object_name,
+            organization,
+            use_organization,
+            field,
+            technical_category,
+            tags,
+            description,
+            management_status,
+            create_time,
+            create_user,
+            update_time,
+            update_user,
+            delete_flag
+        FROM
+            `cpmeta`
+        WHERE delete_flag = 'inuse' AND id = #{id};
+    </select>
+
+    <!-- 根据cpId查询关联的cp属性元数据 -->
+    <select id="selectCPAttributeMetaEntityByCPId" resultMap="cpAttributeMetaEntityResultMap">
+        SELECT
+            cp_attr.id,
+            cp_attr.`name`,
+            cp_attr.alias_name,
+            cp_attr.data_type,
+            cp_attr.cp_id,
+            cp_attr.device_attribute_id,
+            d_attr.`name` AS device_attribute_name,
+            cp_d.device_name AS device_name,
+            cp_attr.attribute_type,
+            cp_attr.default_value,
+            cp_attr.rule_category,
+            cp_attr.rule_content
+        FROM
+            `cp_attributemeta` cp_attr
+        LEFT JOIN device_attributemeta d_attr ON cp_attr.device_attribute_id = d_attr.id
+        LEFT JOIN cpmeta_devicemeta cp_d ON cp_d.cp_id = cp_attr.cp_id AND d_attr.device_id = cp_d.device_id
+        WHERE
+            cp_attr.cp_id = #{_parameter};
+    </select>
+
+    <!-- 根据cpId查询关联的cp事件元数据 -->
+    <select id="selectCPAffairMetaEntityByCPId" resultMap="cpAffairMetaEntityResultMap">
+        SELECT
+            cp_affair.id,
+            cp_affair.`name`,
+            cp_affair.alias_name,
+            d_affair.data_type,
+            cp_affair.cp_id,
+            cp_affair.device_affair_id,
+            d_affair.`name` AS device_affair_name,
+            cp_d.device_name AS device_name,
+            cp_affair.affair_type,
+            cp_affair.rule_category,
+            cp_affair.rule_content
+        FROM
+            `cp_affairmeta` cp_affair
+        LEFT JOIN device_affairmeta d_affair ON cp_affair.device_affair_id = d_affair.id
+        LEFT JOIN cpmeta_devicemeta cp_d ON cp_d.cp_id = cp_affair.cp_id AND cp_d.device_id = d_affair.device_id
+        WHERE
+            cp_affair.cp_id = #{_parameter};
+    </select>
+
+    <!-- 根据cpId查询关联的cp操作元数据 -->
+    <select id="selectCPActionMetaEntityByCPId" resultMap="cpActionMetaEntityResultMap">
+        SELECT
+            cp_action.id,
+            cp_action.`name`,
+            cp_action.alias_name,
+            d_action.data_type,
+            cp_action.cp_id,
+            cp_action.device_action_id,
+            d_action.`name` AS device_action_name,
+            cp_d.device_name AS device_name,
+            cp_action.rule_category,
+            cp_action.rule_content
+        FROM
+            `cp_actionmeta` cp_action
+        LEFT JOIN device_actionmeta d_action ON cp_action.device_action_id = d_action.id
+        LEFT JOIN cpmeta_devicemeta cp_d ON cp_d.cp_id = cp_action.cp_id AND cp_d.device_id = d_action.device_id
+        WHERE cp_action.cp_id = #{_parameter};
+    </select>
+
+    <!-- 根据cpId查询关联的设备元数据 -->
+    <select id="selectCPMetaDeviceMetaEntityByCPId" resultMap="cpMetaDeviceMetaEntityResultMap">
+        SELECT
+            cp_d.id,
+            cp_d.alias_name,
+            cp_d.cp_id,
+            cp_d.device_id,
+            cp_d.device_name AS device_name,
+			cp_d.listener_class_name
+        FROM
+            `cpmeta_devicemeta` cp_d
+        WHERE cp_d.cp_id = #{_parameter};
+    </select>
+
+    <!-- 根据设备元数据id和设备事件名称查询关联的cp元数据以及关联事件相关信息 -->
+    <select id="selectCPMetaListByDeviceIdAndAffairName" resultType="cps.cpsruntimeservice.dto.DeviceRelatedEntity">
+        SELECT
+            cp_d.cp_id AS cpUuid,
+            cp_aff.id AS cpAffairUuid,
+            cp_aff.`name` AS cpAffairName,
+            cp_d.device_id AS deviceUuid,
+            d_aff.id AS deviceAffairUuid,
+            d_aff.`name` AS deviceAffairName
+        FROM
+            cpmeta_devicemeta cp_d
+        LEFT JOIN device_affairmeta d_aff ON d_aff.device_id = cp_d.device_id
+        LEFT JOIN cp_affairmeta cp_aff ON cp_aff.device_affair_id = d_aff.id
+        WHERE
+            cp_d.device_id = #{deviceId} AND d_aff.`name` = #{deviceAffairName};
+    </select>
+
+    <!-- 根据设备元数据id和设备属性名称查询关联的cp元数据以及关联属性相关信息 -->
+    <select id="selectCPMetaListByDeviceIdAndAttributeName" resultType="cps.cpsruntimeservice.dto.DeviceRelatedEntity">
+        SELECT
+            cp_d.cp_id AS cpUuid,
+            cp_attr.id AS cpAttributeUuid,
+            cp_attr.`name` AS cpAttributeName,
+            cp_d.device_id AS deviceUuid,
+            d_attr.id AS deviceAttributeUuid,
+            d_attr.`name` AS deviceAttributeName
+        FROM
+            cpmeta_devicemeta cp_d
+        LEFT JOIN device_attributemeta d_attr ON d_attr.device_id = cp_d.device_id
+        LEFT JOIN cp_attributemeta cp_attr ON cp_attr.device_attribute_id = d_attr.id
+        WHERE
+            cp_d.device_id = #{deviceId} AND d_attr.`name` = #{deviceAttributeName};
+    </select>
+</mapper>

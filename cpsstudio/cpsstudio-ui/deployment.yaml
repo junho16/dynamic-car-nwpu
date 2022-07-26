@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:CpsStudioUI
+spec:
+  selector:
+    app: CpsStudioUI
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: CpsStudioUI
+  labels:
+    app: CpsStudioUI
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: CpsStudioUI
+  template:
+    metadata:
+      labels:
+        app: CpsStudioUI
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: maven
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 8081

@@ -1,0 +1,21 @@
+spring:
+  profiles:
+    active: 'dev'
+  application:
+    name: iotbridgeonenet
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.server-addr}
+        file-extension: yaml
+        extension-configs:
+          - data-id: nacos-config.yaml
+            refresh: true
+          - data-id: kafka-config.yaml
+            refresh: true
+
+          - data-id: iotbridgeonenet-config.yaml
+            group: IOTBRIDGEONENETSERVICE
+            refresh: true

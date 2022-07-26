@@ -1,0 +1,100 @@
+{
+  "properties" : [ {
+    "identifier" : "powerStatus",
+    "name" : "状态",
+    "functionType" : "u",
+    "accessMode" : "rw",
+    "functionMode" : "property",
+    "desc" : null,
+    "dataType" : {
+      "type" : "enum",
+      "specs" : {
+        "0" : "停止_OFF",
+        "1" : "启动_ON"
+      }
+    }
+  }, {
+    "identifier" : "temperature",
+    "name" : "温度",
+    "functionType" : "u",
+    "accessMode" : "rw",
+    "functionMode" : "property",
+    "desc" : null,
+    "dataType" : {
+      "type" : "double",
+      "specs" : {
+        "min" : "-172",
+        "max" : "152",
+        "unit" : "摄氏度 / °C",
+        "step" : "0.01"
+      }
+    }
+  } ],
+  "events" : [ {
+    "identifier" : "startTheAbnormal",
+    "name" : "启动告警",
+    "desc" : null,
+    "functionMode" : "event",
+    "outputData" : [ {
+      "identifier" : "message",
+      "name" : "信息",
+      "dataType" : {
+        "type" : "string",
+        "specs" : {
+          "length" : "255"
+        }
+      }
+    } ],
+    "functionType" : "u",
+    "eventType" : "alert"
+  }, {
+    "identifier" : "temperatureWarning",
+    "name" : "温度告警",
+    "desc" : null,
+    "functionMode" : "event",
+    "outputData" : [ {
+      "identifier" : "temperature",
+      "name" : "温度",
+      "dataType" : {
+        "type" : "double",
+        "specs" : {
+          "min" : "-175",
+          "max" : "175",
+          "unit" : "摄氏度 / °C",
+          "step" : "0.01"
+        }
+      }
+    }, {
+      "identifier" : "message",
+      "name" : "信息",
+      "dataType" : {
+        "type" : "string",
+        "specs" : {
+          "length" : "255"
+        }
+      }
+    } ],
+    "functionType" : "u",
+    "eventType" : "alert"
+  } ],
+  "services" : [ {
+    "name" : "引擎控制",
+    "identifier" : "setEngineState",
+    "functionType" : "u",
+    "functionMode" : "service",
+    "desc" : null,
+    "callType" : "a",
+    "input" : [ {
+      "identifier" : "engineState",
+      "name" : "发动机状态",
+      "dataType" : {
+        "type" : "enum",
+        "specs" : {
+          "0" : "停止_OFF",
+          "1" : "启动_ON"
+        }
+      }
+    } ],
+    "output" : [ ]
+  } ]
+}

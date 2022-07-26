@@ -1,0 +1,36 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:CpsRuntimeService
+spec:
+  selector:
+    app: CpsRuntimeService
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: CpsRuntimeService
+  labels:
+    app: CpsRuntimeService
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: CpsRuntimeService
+  template:
+    metadata:
+      labels:
+        app: CpsRuntimeService
+    spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
+      containers:
+      - name: maven
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
+        ports:
+        - containerPort: 8080

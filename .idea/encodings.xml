@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/IoTBridge/IoTBridge-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/IoTBridge/IoTBridge-ctwing/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/IoTBridge/IoTBridge-ctwing/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/IoTBridge/IoTBridge-onenet/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/IoTBridge/IoTBridge-onenet/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cps-dyn-car/device-onenet/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cps-dyn-car/device-onenet/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cps-dyn-car/dyn-cps-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cps-dyn-car/dyn-cps-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpscore/sccps-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsdata/cpsdata-access/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsdata/cpsdata-access/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsdata/cpsdata-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsgateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsgateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsruntime/cpsruntime-api-imp/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsruntime/cpsruntime-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsruntime/cpsruntime-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsruntime/cpsruntime-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsruntime/cpsruntime-ui/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsruntime/cpsruntime-ui/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsstudio/cpsstudio-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsstudio/cpsstudio-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsstudio/cpsstudio-ui/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cpsstudio/cpsstudio-ui/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/device/device-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/device/deviceonenetdemo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/device/deviceonenetdemo/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

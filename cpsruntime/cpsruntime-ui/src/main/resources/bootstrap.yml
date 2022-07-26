@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: '@profile.active@'
+  application:
+    name: cpsruntimeui
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.server-addr}
+        file-extension: yaml
+        extension-configs:
+          - data-id: nacos-config.yaml
+            refresh: true
+
+          - data-id: cpsruntimeui-config.yaml
+            group: CPSRUNTIMEUI
+            refresh: true

@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cps.cpsruntimeservice.dao.DeviceMetaMapper">
+
+    <!-- DeviceMeta数据返回值 -->
+    <resultMap id="deviceMetaBaseResultMap" type="cps.cpsruntimeservice.dto.DeviceMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="listener_class_name" property="listenerClassName"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="iot_uuid" property="iotUuid"/>
+        <result column="organization" property="organization"/>
+        <result column="use_organization" property="useOrganization"/>
+        <result column="field" property="field"/>
+        <result column="management_status" property="managementStatus"/>
+        <result column="message_protocol" property="messageProtocol"/>
+        <result column="equipment_type" property="equipmentType"/>
+        <result column="connection_protocol" property="connectionProtocol"/>
+        <result column="category" property="category"/>
+        <result column="location" property="location"/>
+        <result column="network_mode" property="networkMode"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="authentication_mode" property="authenticationMode"/>
+        <result column="tags" property="tags"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="last_online_time" property="lastOnlineTime"/>
+        <result column="delete_flag" property="deleteFlag"/>
+    </resultMap>
+
+    <!-- DeviceAttributeMetaEntity数据返回值 -->
+    <resultMap id="deviceAttributeMetaResultMap" type="cps.cpsruntimeservice.dto.DeviceAttributeMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="iot_attribute_name" property="iotAttributeName"/>
+        <result column="data_type" property="dataType"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- DeviceAffairMetaEntity数据返回值 -->
+    <resultMap id="deviceAffairMetaResultMap" type="cps.cpsruntimeservice.dto.DeviceAffairMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="iot_affair_name" property="iotAffairName"/>
+        <result column="data_type" property="dataType"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- DeviceActionMetaEntity数据返回值 -->
+    <resultMap id="deviceActionMetaResultMap" type="cps.cpsruntimeservice.dto.DeviceActionMetaEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="iot_action_name" property="iotActionName"/>
+        <result column="data_type" property="dataType"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="rule_category" property="ruleCategory"/>
+        <result column="rule_content" property="ruleContent"/>
+    </resultMap>
+
+    <!-- 根据id查询DeviceMeta数据 -->
+    <select id="selectDeviceMetaEntityById" resultMap="deviceMetaBaseResultMap">
+        SELECT
+            d.id,
+            d.iot_uuid,
+            d.device_type,
+            d.`name`,
+            d.listener_class_name,
+            d.organization,
+            d.use_organization,
+            d.field,
+            d.management_status,
+            d.message_protocol,
+            d.equipment_type,
+            d.connection_protocol,
+            d.category,
+            d.location,
+            d.network_mode,
+            d.ip_address,
+            d.authentication_mode,
+            d.tags,
+            d.description,
+            d.create_time,
+            d.create_user,
+            d.update_time,
+            d.update_user,
+            d.register_time,
+            d.last_online_time,
+            d.delete_flag
+        FROM
+            `devicemeta` d
+        WHERE d.delete_flag = 'inuse' AND d.id = #{id};
+    </select>
+
+    <!-- 根据deviceId查询DeviceAttributeMeta数据 -->
+    <select id="selectDeviceAttributeMetaEntityByDeviceMetaId" resultMap="deviceAttributeMetaResultMap">
+        SELECT
+            d_attr.id,
+            d_attr.`name`,
+            d_attr.alias_name,
+            d_attr.iot_attribute_name,
+            d_attr.data_type,
+            d_attr.device_id,
+            d_attr.rule_category,
+            d_attr.rule_content
+        FROM
+            `device_attributemeta` d_attr
+        WHERE d_attr.device_id = #{_parameter};
+    </select>
+
+    <!-- 根据deviceId查询DeviceAffairMeta数据 -->
+    <select id="selectDeviceAffairMetaEntityByDeviceMetaId" resultMap="deviceAffairMetaResultMap">
+        SELECT
+            d_affair.id,
+            d_affair.`name`,
+            d_affair.alias_name,
+            d_affair.iot_affair_name,
+            d_affair.data_type,
+            d_affair.device_id,
+            d_affair.rule_category,
+            d_affair.rule_content
+        FROM
+            `device_affairmeta` d_affair
+        WHERE d_affair.device_id = #{_parameter};
+    </select>
+
+    <!-- 根据deviceId查询DeviceActionMeta数据 -->
+    <select id="selectDeviceActionMetaEntityByDeviceMetaId" resultMap="deviceActionMetaResultMap">
+        SELECT
+            d_action.id,
+            d_action.`name`,
+            d_action.alias_name,
+            d_action.iot_action_name,
+            d_action.data_type,
+            d_action.device_id,
+            d_action.rule_category,
+            d_action.rule_content
+        FROM
+            `device_actionmeta` d_action
+        WHERE d_action.device_id = #{_parameter};
+    </select>
+
+    <!-- 根据iotuuid查询DeviceMeta数据 -->
+    <select id="selectDeviceMetaEntityByIotUUID" resultMap="deviceMetaBaseResultMap">
+        SELECT
+            d.id,
+            d.iot_uuid,
+            d.device_type,
+            d.`name`,
+            d.listener_class_name,
+            d.organization,
+            d.use_organization,
+            d.field,
+            d.management_status,
+            d.message_protocol,
+            d.equipment_type,
+            d.connection_protocol,
+            d.category,
+            d.location,
+            d.network_mode,
+            d.ip_address,
+            d.authentication_mode,
+            d.tags,
+            d.description,
+            d.create_time,
+            d.create_user,
+            d.update_time,
+            d.update_user,
+            d.register_time,
+            d.last_online_time,
+            d.delete_flag
+        FROM
+            `devicemeta` d
+        WHERE d.delete_flag = 'inuse' AND d.iot_uuid = #{iotUUID};
+    </select>
+
+    <!-- 添加设备基础元数据 -->
+    <insert id="insertDeviceMetaEntity" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cps.cpsruntimeservice.dto.DeviceMetaEntity">
+        insert into devicemeta(
+            `name`,
+            device_type,
+            iot_uuid,
+            listener_class_name,
+            organization,
+            use_organization,
+            field,
+            management_status,
+            message_protocol,
+            equipment_type,
+            connection_protocol,
+            category,
+            location,
+            network_mode,
+            ip_address,
+            authentication_mode,
+            tags,
+            description,
+            create_time,
+            create_user,
+            update_time,
+            update_user,
+            register_time,
+            last_online_time,
+            delete_flag
+        )
+        values(
+            #{name},
+            #{deviceType},
+            #{iotUuid},
+            #{listenerClassName},
+            #{organization},
+            #{useOrganization},
+            #{field},
+            #{managementStatus},
+            #{messageProtocol},
+            #{equipmentType},
+            #{connectionProtocol},
+            #{category},
+            #{location},
+            #{networkMode},
+            #{ipAddress},
+            #{authenticationMode},
+            #{tags},
+            #{description},
+            #{createTime},
+            #{createUser},
+            #{updateTime},
+            #{updateUser},
+            #{registerTime},
+            #{lastOnlineTime},
+            #{deleteFlag}
+        )
+    </insert>
+
+    <!-- 添加设备属性元数据 -->
+    <insert id="insertDeviceAttributeMetaEntity" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cps.cpsruntimeservice.dto.DeviceAttributeMetaEntity">
+        insert into device_attributemeta(`name`,alias_name,data_type,iot_attribute_name,device_id,rule_category,rule_content)
+        values(#{name},#{aliasName},#{dataType},#{iotAttributeName},#{deviceId},#{ruleCategory},#{ruleContent})
+    </insert>
+
+    <!-- 添加设备事件元数据 -->
+    <insert id="insertDeviceAffairMetaEntity" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cps.cpsruntimeservice.dto.DeviceAffairMetaEntity">
+        insert into device_affairmeta(`name`,alias_name,data_type,iot_affair_name,device_id,rule_category,rule_content)
+        values(#{name},#{aliasName},#{dataType},#{iotAffairName},#{deviceId},#{ruleCategory},#{ruleContent})
+    </insert>
+
+    <!-- 添加设备操作元数据 -->
+    <insert id="insertDeviceActionMetaEntity" useGeneratedKeys="true" keyProperty="id"
+            parameterType="cps.cpsruntimeservice.dto.DeviceActionMetaEntity">
+        insert into device_actionmeta(`name`,alias_name,data_type,iot_action_name,device_id,rule_category,rule_content)
+        values(#{name},#{aliasName},#{dataType},#{iotActionName},#{deviceId},#{ruleCategory},#{ruleContent})
+    </insert>
+
+    <!-- 更新设备基础元数据 -->
+    <update id="updateDeviceMetaEntity" parameterType="cps.cpsruntimeservice.dto.DeviceMetaEntity">
+        update devicemeta
+        <set>
+            <if test="name!=null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="deviceType!=null and deviceType!=''">
+                device_type = #{deviceType},
+            </if>
+            <if test="iotUuid!=null and iotUuid!=''">
+                iot_uuid = #{iotUuid},
+            </if>
+            <if test="listenerClassName!=null and listenerClassName!=''">
+                listener_class_name = #{listenerClassName},
+            </if>
+            <if test="organization!=null and organization!=''">
+                organization = #{organization},
+            </if>
+            <if test="useOrganization!=null and useOrganization!=''">
+                use_organization = #{useOrganization},
+            </if>
+            <if test="field!=null and field!=''">
+                field = #{field},
+            </if>
+            <if test="managementStatus!=null and managementStatus!=''">
+                management_status = #{managementStatus},
+            </if>
+            <if test="messageProtocol!=null and messageProtocol!=''">
+                message_protocol = #{messageProtocol},
+            </if>
+            <if test="equipmentType!=null and equipmentType!=''">
+                equipment_type = #{equipmentType},
+            </if>
+            <if test="connectionProtocol!=null and connectionProtocol!=''">
+                connection_protocol = #{connectionProtocol},
+            </if>
+            <if test="category!=null and category!=''">
+                category = #{category},
+            </if>
+            <if test="location!=null and location!=''">
+                location = #{location},
+            </if>
+            <if test="networkMode!=null and networkMode!=''">
+                network_mode = #{networkMode},
+            </if>
+            <if test="ipAddress!=null and ipAddress!=''">
+                ip_address = #{ipAddress},
+            </if>
+            <if test="authenticationMode!=null and authenticationMode!=''">
+                authentication_mode = #{authenticationMode},
+            </if>
+            <if test="tags!=null and tags!=''">
+                tags = #{tags},
+            </if>
+            <if test="description!=null and description!=''">
+                description = #{description},
+            </if>
+            <if test="createTime!=null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUser!=null and createUser!=''">
+                create_user = #{createUser},
+            </if>
+            <if test="updateTime!=null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser!=null and updateUser!=''">
+                update_user = #{updateUser},
+            </if>
+            <if test="registerTime!=null">
+                register_time = #{registerTime},
+            </if>
+            <if test="lastOnlineTime!=null">
+                last_online_time = #{lastOnlineTime},
+            </if>
+            <if test="deleteFlag!=null and deleteFlag!=''">
+                delete_flag = #{deleteFlag}
+            </if>
+        </set>
+        where 1=1
+        <if test="id!=null">
+            and id = #{id}
+        </if>
+    </update>
+
+    <!-- 更新设备属性元数据 -->
+    <update id="updateDeviceAttributeMetaEntity" parameterType="cps.cpsruntimeservice.dto.DeviceAttributeMetaEntity">
+        update device_attributemeta
+        <set>
+            <if test="name!=null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="aliasName!=null and aliasName!=''">
+                alias_name = #{aliasName},
+            </if>
+            <if test="dataType!=null and dataType!=''">
+                data_type = #{dataType},
+            </if>
+            <if test="iotAttributeName!=null and iotAttributeName!=''">
+                iot_attribute_name = #{iotAttributeName},
+            </if>
+            <if test="deviceId!=null and deviceId!=''">
+                device_id = #{deviceId},
+            </if>
+            <if test="ruleCategory!=null and ruleCategory!=''">
+                rule_category = #{ruleCategory},
+            </if>
+            <if test="ruleContent!=null and ruleContent!=''">
+                rule_content = #{ruleContent}
+            </if>
+        </set>
+        where 1=1
+        <if test="id!=null">
+            and id = #{id}
+        </if>
+    </update>
+
+    <!-- 更新设备事件元数据 -->
+    <update id="updateDeviceAffairMetaEntity" parameterType="cps.cpsruntimeservice.dto.DeviceAffairMetaEntity">
+        update device_affairmeta
+        <set>
+            <if test="name!=null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="aliasName!=null and aliasName!=''">
+                alias_name = #{aliasName},
+            </if>
+            <if test="dataType!=null and dataType!=''">
+                data_type = #{dataType},
+            </if>
+            <if test="iotAffairName!=null and iotAffairName!=''">
+                iot_affair_name = #{iotAffairName},
+            </if>
+            <if test="deviceId!=null and deviceId!=''">
+                device_id = #{deviceId},
+            </if>
+            <if test="ruleCategory!=null and ruleCategory!=''">
+                rule_category = #{ruleCategory},
+            </if>
+            <if test="ruleContent!=null and ruleContent!=''">
+                rule_content = #{ruleContent}
+            </if>
+        </set>
+        where 1=1
+        <if test="id!=null">
+            and id = #{id}
+        </if>
+    </update>
+
+    <!-- 更新设备操作元数据 -->
+    <update id="updateDeviceActionMetaEntity" parameterType="cps.cpsruntimeservice.dto.DeviceActionMetaEntity">
+        update device_actionmeta
+        <set>
+            <if test="name!=null and name!=''">
+                `name` = #{name},
+            </if>
+            <if test="aliasName!=null and aliasName!=''">
+                alias_name = #{aliasName},
+            </if>
+            <if test="dataType!=null and dataType!=''">
+                data_type = #{dataType},
+            </if>
+            <if test="iotActionName!=null and iotActionName!=''">
+                iot_action_name = #{iotActionName},
+            </if>
+            <if test="deviceId!=null and deviceId!=''">
+                device_id = #{deviceId},
+            </if>
+            <if test="ruleCategory!=null and ruleCategory!=''">
+                rule_category = #{ruleCategory},
+            </if>
+            <if test="ruleContent!=null and ruleContent!=''">
+                rule_content = #{ruleContent}
+            </if>
+        </set>
+        where 1=1
+        <if test="id!=null">
+            and id = #{id}
+        </if>
+    </update>
+
+    <!-- 删除设备基础元数据 -->
+    <delete id="deleteDeviceMetaEntity" parameterType="cps.cpsruntimeservice.dto.DeviceMetaEntity">
+        delete from devicemeta where id = #{id}
+    </delete>
+
+    <!-- 删除设备属性元数据 -->
+    <delete id="deleteDeviceAttributeMetaEntity" parameterType="cps.cpsruntimeservice.dto.DeviceAttributeMetaEntity">
+        delete from device_attributemeta where id = #{id}
+    </delete>
+
+    <!-- 删除设备事件元数据 -->
+    <delete id="deleteDeviceAffairMetaEntity" parameterType="cps.cpsruntimeservice.dto.DeviceAffairMetaEntity">
+        delete from device_affairmeta where id = #{id}
+    </delete>
+
+    <!-- 删除设备操作元数据 -->
+    <delete id="deleteDeviceActionMetaEntity" parameterType="cps.cpsruntimeservice.dto.DeviceActionMetaEntity">
+        delete from device_actionmeta where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>xuanji.cps</groupId>
+    <artifactId>cpsruntime</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>cpsruntime-api-imp</artifactId>
+ 
+  <name>cpsruntime-api-imp</name>
+   <description>运行时标准接口的默认实现</description>
+
+  <dependencies>
+        <!-- 引入接口定义模块 -->
+        <dependency>
+            <groupId>xuanji.cps</groupId>
+            <artifactId>cpsruntime-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    
+        <!--dubbo-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+           <artifactId>spring-cloud-starter-dubbo</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>spring-cloud-openfeign-core</artifactId>
+                    <groupId>org.springframework.cloud</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+      <!-- 表达式引擎aviator -->
+      <dependency>
+          <groupId>com.googlecode.aviator</groupId>
+          <artifactId>aviator</artifactId>
+          <version>5.2.5</version>
+      </dependency>
+  </dependencies>
+  <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+            
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.4</version>
+            <executions>
+                <execution>
+                    <id>attach-javadocs</id>
+                    <goals>
+                        <goal>jar</goal>
+                    </goals>
+                    <configuration>
+                        <additionalparam>-Xdoclint:none</additionalparam>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+
+</project>
