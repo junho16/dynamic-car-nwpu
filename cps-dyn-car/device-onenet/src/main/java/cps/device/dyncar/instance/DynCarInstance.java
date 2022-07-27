@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import cps.device.dyncar.entity.DynCar;
 import cps.device.dyncar.entity.TracePos;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @author Junho
  * @date 2022/7/26 20:26
  */
+@Component
 public class DynCarInstance {
 
     @PostConstruct

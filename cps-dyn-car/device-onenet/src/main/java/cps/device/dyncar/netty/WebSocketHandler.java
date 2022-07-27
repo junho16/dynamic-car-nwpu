@@ -1,7 +1,6 @@
 package cps.device.dyncar.netty;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sun.deploy.trace.Trace;
 import cps.device.dyncar.entity.TracePos;
 import cps.device.dyncar.instance.DynCarInstance;
 import io.netty.buffer.ByteBuf;
@@ -96,12 +95,14 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
         }
 
         String positionInfo = ((TextWebSocketFrame) frame).text();
-        log.debug("服务端收到：" + positionInfo);
+        log.info("服务端收到：{} , Qsize:{}" , positionInfo ,
+                DynCarInstance.getDynCarMap().get(DynCarChannelManager.findUserId(ctx.channel())).size());
         try {
             TracePos tp = JSONObject.parseObject(positionInfo , TracePos.class);
             String userid = DynCarChannelManager.findUserId(ctx.channel());
             DynCarInstance.getDynCarMap().get(userid).add(tp);
         }catch (Exception e){
+            e.printStackTrace();
             log.error("系统中未找到此用户的信息（channel/trace）！");
         }
 

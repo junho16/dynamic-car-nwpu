@@ -1,7 +1,11 @@
 package cps.device.onenetapi.dto;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
 public class DynCarListStructDTO {
   @JSONField(
       name = "rid"
@@ -23,6 +27,11 @@ public class DynCarListStructDTO {
   )
   private Double speed;
 
+  @JSONField(
+      name = "ts"
+  )
+  private Long ts;
+
   public void setRid(String rid) {
     this.rid = rid;
   }
@@ -39,6 +48,10 @@ public class DynCarListStructDTO {
     this.speed = speed;
   }
 
+  public void setTs(Long ts) {
+    this.ts = ts;
+  }
+
   public String getRid() {
     return this.rid;
   }
@@ -53,5 +66,9 @@ public class DynCarListStructDTO {
 
   public Double getSpeed() {
     return this.speed;
+  }
+
+  public Long getTs() {
+    return this.ts;
   }
 }

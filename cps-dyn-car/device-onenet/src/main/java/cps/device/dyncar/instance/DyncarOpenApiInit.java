@@ -37,7 +37,7 @@ public class DyncarOpenApiInit {
      * 初始化实时车辆的openAPI
      * @return
      */
-    @Bean(name = "dyncarOpenApi")
+    @Bean(name = "openApi")
     public OpenApi creatDeviceOpenAPI() {
         OpenApi openApi = null;
         //设备json数据

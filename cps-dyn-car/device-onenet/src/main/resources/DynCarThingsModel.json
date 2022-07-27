@@ -14,58 +14,75 @@
       "accessMode": "rw",
       "desc": "",
       "dataType": {
-        "type": "struct",
-        "specs": [
-          {
-            "identifier": "rid",
-            "name": "实时车辆id",
-            "dataType": {
-              "type": "string",
-              "specs": {
-                "length": 256
+        "type": "array",
+        "specs": {
+          "length": 10,
+          "type": "struct",
+          "specs": [
+            {
+              "identifier": "rid",
+              "name": "实时车辆id",
+              "dataType": {
+                "type": "string",
+                "specs": {
+                  "length": 256
+                }
+              }
+            },
+            {
+              "identifier": "lon",
+              "name": "实时车辆经度",
+              "dataType": {
+                "type": "double",
+                "specs": {
+                  "min": "-180",
+                  "max": "180",
+                  "unit": "度 / °",
+                  "step": "0.0000000000000001"
+                }
+              }
+            },
+            {
+              "identifier": "lat",
+              "name": "实时车辆纬度",
+              "dataType": {
+                "type": "double",
+                "specs": {
+                  "min": "-90",
+                  "max": "90",
+                  "unit": "度 / °",
+                  "step": "0.0000000000000001"
+                }
+              }
+            },
+            {
+              "identifier": "speed",
+              "name": "实时车辆速度",
+              "dataType": {
+                "type": "double",
+                "specs": {
+                  "min": "0",
+                  "max": "200",
+                  "unit": "米每秒 / m/s",
+                  "step": "0.00001"
+                }
+              }
+            },
+            {
+              "identifier": "ts",
+              "name": "时间",
+              "dataType": {
+                "type": "int64",
+                "specs": {
+                  "min": "-9223372036854775807",
+                  "max": "9223372036854775805",
+                  "unit": "",
+                  "step": ""
+                }
               }
             }
-          },
-          {
-            "identifier": "lon",
-            "name": "实时车辆经度",
-            "dataType": {
-              "type": "double",
-              "specs": {
-                "min": "-180",
-                "max": "180",
-                "unit": "度 / °",
-                "step": "0.0000000000000001"
-              }
-            }
-          },
-          {
-            "identifier": "lat",
-            "name": "实时车辆纬度",
-            "dataType": {
-              "type": "double",
-              "specs": {
-                "min": "-90",
-                "max": "90",
-                "unit": "度 / °",
-                "step": "0.0000000000000001"
-              }
-            }
-          },
-          {
-            "identifier": "speed",
-            "name": "实时车辆速度",
-            "dataType": {
-              "type": "double",
-              "specs": {
-                "min": "0",
-                "max": "200",
-                "unit": "米每秒 / m/s",
-                "step": "0.00001"
-              }
-            }
-          }
-        ]
+          ]
+        }
       }
     }
   ],

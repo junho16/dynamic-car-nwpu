@@ -3,9 +3,9 @@ package cps.device.onenetapi;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.onenet.studio.acc.sdk.OpenApi;
-import com.onenet.studio.acc.sdk.dto.DrivingSuggestStructDTO;
-import com.onenet.studio.acc.sdk.dto.DynCarListStructDTO;
 import com.onenet.studio.acc.sdk.interfaces.OpenApiCallback;
+import cps.device.onenetapi.dto.DrivingSuggestStructDTO;
+import cps.device.onenetapi.dto.DynCarListStructDTO;
 
 import java.lang.Exception;
 import java.lang.Integer;
@@ -48,7 +48,7 @@ public class DynCarOpenApiExtention {
      *  @param DynCarList 标识符为DynCarList的属性功能点的值
      *  @param timeout 超时时间，单位为毫秒
      */
-    public int DynCarListPropertyUpload(com.onenet.studio.acc.sdk.dto.DynCarListStructDTO DynCarList, long timeout) throws
+    public int DynCarListPropertyUpload(DynCarListStructDTO[] DynCarList, long timeout) throws
             Exception {
         return this.propertyUpload(timeout, DynCarList);
     }
@@ -60,7 +60,7 @@ public class DynCarOpenApiExtention {
      *  @param timeout 调用超时时间，单位为毫秒
      *  @param DynCarList 标识符为DynCarList的属性功能点的值
      */
-    public int propertyUpload(long timeout, DynCarListStructDTO DynCarList) throws Exception {
+    public int propertyUpload(long timeout, DynCarListStructDTO[] DynCarList) throws Exception {
         Map<String, Object> oneJson = new HashMap<>();
         long now = System.currentTimeMillis();
         String id = String.valueOf(now);

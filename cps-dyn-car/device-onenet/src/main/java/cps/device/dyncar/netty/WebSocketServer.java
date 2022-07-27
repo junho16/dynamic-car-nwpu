@@ -1,5 +1,7 @@
 package cps.device.dyncar.netty;
 
+import com.onenet.studio.acc.sdk.OpenApi;
+import cps.device.dyncar.instance.DynCarSubInfoTask;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 /**
  * @author Junho
@@ -26,6 +29,12 @@ public class WebSocketServer {
         this.initServer();
     }
 
+    @Value("${dyncarNumLimit}")
+    private Integer dyncarNumLimit;
+
+    @Resource
+    OpenApi OpenApi;
+
     private void initServer(){
         log.info("正在启动websocket服务器");
         NioEventLoopGroup boss=new NioEventLoopGroup();
@@ -38,7 +47,12 @@ public class WebSocketServer {
 
             Channel channel = bootstrap.bind(port).sync().channel();
             log.info("webSocket服务器启动成功，channel：{}" , channel);
+
+            Thread t = new Thread(new DynCarSubInfoTask(dyncarNumLimit , OpenApi));
+            t.run();
+
             channel.closeFuture().sync();
+
 
         } catch (InterruptedException e) {
             e.printStackTrace();

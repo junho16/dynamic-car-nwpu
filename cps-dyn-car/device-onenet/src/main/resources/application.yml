@@ -4,13 +4,16 @@ devices:
   bean:
     url: tcp://218.201.45.7:1883
     file_name: /dyncar-device.json
-    product_id: syxHSBqS8g
+    product_id: YRYD3pEArM
+
 websocket:
   server:
     ip: 127.0.0.1
     port: 8888
     suffix: /cps/dyncar
 
+#最大实时车辆容量（系统车辆最大容量）
+dyncarNumLimit: 10
 
 #  ======================
 
