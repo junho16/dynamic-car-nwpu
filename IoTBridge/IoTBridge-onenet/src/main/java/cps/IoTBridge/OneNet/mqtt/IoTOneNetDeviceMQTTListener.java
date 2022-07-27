@@ -104,18 +104,18 @@ public class IoTOneNetDeviceMQTTListener implements IMqttMessageListener {
         SimpleDateFormat slf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = slf.format(at);
 
-        logger.debug("MQTT消息详情：time = " + time + ",msg id: " + msgId + ",topic: " + topic + ", body: " + body);
-        //将物联网设备消息转发至CPS端
-        this.forwardIoTDeviceMessageToCPS(topic, body);
+//        logger.debug("MQTT消息详情：time = " + time + ",msg id: " + msgId + ",topic: " + topic + ", body: " + body);
+//        //将物联网设备消息转发至CPS端
+//        this.forwardIoTDeviceMessageToCPS(topic, body);
 
 
-////      =.= FIXME 暂时只处理车辆的
-//        JSONObject bodyObj = JSONObject.parseObject(body);
-//        if(bodyObj.get("productId").equals("syxHSBqS8g")){
-//            //将物联网设备消息转发至CPS端
-//            logger.info("MQTT消息详情：time = " + time + ",msg id: " + msgId + ",topic: " + topic + ", body: " + body);
-//            this.forwardIoTDeviceMessageToCPS(topic, body);
-//        }
+//      =.= FIXME 暂时只处理实时车辆的
+        JSONObject bodyObj = JSONObject.parseObject(body);
+        if(bodyObj.get("productId").equals("YRYD3pEArM")){
+            //将物联网设备消息转发至CPS端
+            logger.info("MQTT消息详情：time = " + time + ",msg id: " + msgId + ",topic: " + topic + ", body: " + body);
+            this.forwardIoTDeviceMessageToCPS(topic, body);
+        }
 
     }
 }

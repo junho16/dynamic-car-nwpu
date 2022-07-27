@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: '@profile.active@'
+  application:
+    name: cpsidcenergy
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.server-addr}
+        file-extension: yaml
+        extension-configs:
+          - data-id: nacos-config.yaml
+            refresh: true
+
+          - data-id: cpsidcenergy-config.yaml
+            group: CPSIDCENERGY
+            refresh: true
+
+          - data-id: redis-config.yaml
+            refresh: true
+
+          - data-id: kafka-config.yaml
+            refresh: true

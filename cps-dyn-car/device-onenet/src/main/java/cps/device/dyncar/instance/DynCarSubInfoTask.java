@@ -48,7 +48,7 @@ public class DynCarSubInfoTask implements Runnable{
                     /**
                      * 经测试 100ms~500ms左右可以保证 客户端上传数据后 可以直接上报至onenet 耗时为1s（即队列size永远为 1）
                      */
-                    apiExt.DynCarListPropertyUpload(dyncars , 100);
+                    apiExt.DynCarListPropertyUpload(dyncars , 500);
                     log.info("上报成功，上报的数据：{}",dyncars);
                 } catch (Exception e) {
                     e.printStackTrace();

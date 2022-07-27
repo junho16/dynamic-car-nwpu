@@ -12,6 +12,4 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Data
 public class DynCar {
 
-
-
 }

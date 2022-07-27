@@ -39,10 +39,4 @@ public class TracePos {
     )
     private Long ts;
 
-    public TracePos(String rid, Double lon, Double lat, Double speed) {
-        this.rid = rid;
-        this.lon = lon;
-        this.lat = lat;
-        this.speed = speed;
-    }
 }

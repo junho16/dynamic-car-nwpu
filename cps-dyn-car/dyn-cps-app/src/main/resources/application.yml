@@ -1,0 +1,14 @@
+server:
+  port: 9002
+
+cpsInstance:
+  uuid: "4"
+
+logging:
+  level:
+    root: ERROR        
+    org:
+      springframework:
+        security: WARN
+        web: WARN
+    cps: debug

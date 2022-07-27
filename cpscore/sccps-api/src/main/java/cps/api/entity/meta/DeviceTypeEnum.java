@@ -12,7 +12,8 @@ public enum DeviceTypeEnum {
     thSensor("温湿度传感器"),
     acControl("空调控制器"),
     powerCollector("功耗采集器"),
-    detection("探测器");
+    detection("探测器"),
+    dyncar("实时车辆探测器");
 
     private String message;
 

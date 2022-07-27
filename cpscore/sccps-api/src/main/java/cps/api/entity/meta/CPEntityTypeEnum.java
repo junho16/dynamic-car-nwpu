@@ -6,7 +6,8 @@ public enum CPEntityTypeEnum {
     equipmentCabinet("机柜"),
     tankUnit("柜式机组"),
     airConditioner("空调"),
-    TrafficCP("交通CP");
+    TrafficCP("交通CP"),
+    DynCarCP("实时车辆CP");
 
     private String message;
 
