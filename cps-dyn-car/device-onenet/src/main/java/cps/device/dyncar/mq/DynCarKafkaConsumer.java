@@ -12,6 +12,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -30,28 +31,35 @@ public class DynCarKafkaConsumer {
      */
     @KafkaListener(topics = "${topic.dyncarProperty}" , groupId = "dyncar")
     public void eventTopicConsumer(String message) {
-        try {
+        if(message != null){
 
-//            log.info("Netty通过MQ接收到消息message: {}" , message) ;
-            WSDataDTO object = JSONObject.parseObject(message , WSDataDTO.class);
-            List<DynCarDTO> list = object.getCars();
-            for(DynCarDTO car : list){
 
-                ConcurrentMap<String, Channel> channelConcurrentMap = DynCarChannelManager.getChannelMap();
-                for(Map.Entry<String, Channel> entry : channelConcurrentMap.entrySet()){
-                    log.info("map key:{} ;map value:{}" , entry.getKey() , entry.getValue());
+            try {
+
+    //            log.info("Netty通过MQ接收到消息message: {}" , message) ;
+                WSDataDTO object = JSONObject.parseObject(message , WSDataDTO.class);
+                List<DynCarDTO> list = object.getCars();
+                for(DynCarDTO car : list){
+
+                    ConcurrentMap<String, Channel> channelConcurrentMap = DynCarChannelManager.getChannelMap();
+                    for(Map.Entry<String, Channel> entry : channelConcurrentMap.entrySet()){
+                        log.info("map key:{} ;map value:{}" , entry.getKey() , entry.getValue());
+                    }
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                    car.setTime(sdf.format(new Date(Long.parseLong(String.valueOf(car.getTs())))));
+
+                    Channel channel = DynCarChannelManager.findChannel(car.getRid());
+    //                log.info("此时mapsize：{},{}的channel为：{}",channelConcurrentMap.size() , car.getRid() ,channel);
+    //                channel.writeAndFlush(JSONObject.toJSONString(car));
+                    TextWebSocketFrame tws = new TextWebSocketFrame(JSONObject.toJSONString(car));
+                    channel.writeAndFlush(tws);
+
                 }
-
-                Channel channel = DynCarChannelManager.findChannel(car.getRid());
-//                log.info("此时mapsize：{},{}的channel为：{}",channelConcurrentMap.size() , car.getRid() ,channel);
-//                channel.writeAndFlush(JSONObject.toJSONString(car));
-                TextWebSocketFrame tws = new TextWebSocketFrame(JSONObject.toJSONString(car));
-                channel.writeAndFlush(tws);
-
+            }catch (Exception e){
+    //            e.printStackTrace();
+                log.error("netty处理车辆消息失败:{}",e.getMessage());
             }
-        }catch (Exception e){
-//            e.printStackTrace();
-            log.error("netty处理车辆消息失败:{}",e.getMessage());
         }
     }
 }
