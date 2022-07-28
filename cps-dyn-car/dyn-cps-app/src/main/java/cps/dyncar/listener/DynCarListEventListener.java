@@ -10,12 +10,18 @@ import cps.dyncar.dto.DynCarDTO;
 import cps.dyncar.dto.DynCarListStruct;
 import cps.dyncar.dto.WSDataDTO;
 import cps.dyncar.entity.DynCarCPSInstance;
+import cps.dyncar.kafka.KafkaProducer;
 import cps.dyncar.websocket.WebSocketServer;
 import cps.runtime.api.entity.imp.RedisCPSInstance;
 import cps.runtime.api.service.imp.SpringContextHolder;
+import org.checkerframework.checker.units.qual.C;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +33,14 @@ import java.util.concurrent.*;
  * @author Junho
  * @date 2022/7/27 19:39
  */
+@Component
 public class DynCarListEventListener extends CPSEventListener<DynCarCPSInstance>{
 
     private static final Logger logger = LoggerFactory.getLogger(DynCarListEventListener.class);
+
+    private final KafkaProducer kafkaProducer = SpringContextHolder.getBean("kafkaProducer");
+
+    private final String topicDevicePropertyTopic = SpringContextHolder.getProperty("topic.dyncarProperty");
 
     // Redis主机
     private final String redisHost = SpringContextHolder.getProperty("spring.redis.host");
@@ -48,10 +59,6 @@ public class DynCarListEventListener extends CPSEventListener<DynCarCPSInstance>
     @Override
     public void beforeChange(Event event) {
         super.beforeChange(event);
-
-//                //FIXME testMQ
-//                kafkaProducer.send(topicDevicePropertyTopic,  msg.toString().length() > 10 ? msg.toString().substring(0 , 10):"123");
-
 
         // Redis实例
         RedisCPSInstance redisCPSInstance = new RedisCPSInstance(this.entity.getCpsInstanceMeta(), redisHost, redisPort, redisPwd);
@@ -101,7 +108,11 @@ public class DynCarListEventListener extends CPSEventListener<DynCarCPSInstance>
                     System.out.println("===============");
 
                     WSDataDTO wsDataDTO = new WSDataDTO("rc" , System.currentTimeMillis(), dynCarDTOS);
+//                    WSDataDTO wsDataDTO = new WSDataDTO("rc" , dynCarDTOS.get(0).getTs(), dynCarDTOS);
                     String res = JSONObject.toJSONString(wsDataDTO);
+
+                    kafkaProducer.send(topicDevicePropertyTopic, res);
+
                     CopyOnWriteArraySet<WebSocketServer> webSocketSet =
                             WebSocketServer.getWebSocketSet();
                     webSocketSet.forEach(c -> {

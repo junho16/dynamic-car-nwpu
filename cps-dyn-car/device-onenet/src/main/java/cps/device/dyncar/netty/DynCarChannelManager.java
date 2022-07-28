@@ -5,6 +5,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import lombok.Data;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -28,6 +29,10 @@ public class DynCarChannelManager {
      * key:userid ; value:channel
      */
     private static ConcurrentMap<String, Channel> ChannelMap = new ConcurrentHashMap();
+
+    public static ConcurrentMap<String, Channel> getChannelMap(){
+        return ChannelMap;
+    }
 
     /**
      * 在建立连接后首次通信 即 创建websocket时 逆向记录channel

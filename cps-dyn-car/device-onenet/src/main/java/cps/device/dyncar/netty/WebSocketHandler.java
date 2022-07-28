@@ -12,6 +12,7 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -96,7 +97,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
 
         String positionInfo = ((TextWebSocketFrame) frame).text();
         log.info("服务端收到：{} , Qsize:{}" , positionInfo ,
-                DynCarInstance.getDynCarMap().get(DynCarChannelManager.findUserId(ctx.channel())).size());
+        DynCarInstance.getDynCarMap().get(DynCarChannelManager.findUserId(ctx.channel())).size());
         try {
             TracePos tp = JSONObject.parseObject(positionInfo , TracePos.class);
             String userid = DynCarChannelManager.findUserId(ctx.channel());
@@ -109,11 +110,12 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
 
 
 //        TextWebSocketFrame tws = new TextWebSocketFrame(new Date().toString()
-//                + ctx.channel().id() + "：" + request);
+//                + ctx.channel().id() + "：" + positionInfo);
 //        // 群发
 //        DynCarChannelManager.send2All(tws);
-//        // 返回【谁发的发给谁】
-//        //ctx.channel().writeAndFlush(tws);
+        // 返回【谁发的发给谁】
+//        ctx.channel().writeAndFlush(tws);
+//        System.out.println(ctx.channel());
     }
 
     /**
@@ -121,9 +123,14 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
      * @param ctx
      * @param req
      */
+    @SneakyThrows
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) {
 
         String uri = req.uri();
+        if(uri.length() <= 1){
+            throw new Exception("用户名不合法");
+        }
+        uri = uri.substring(1 , uri.length());
         DynCarChannelManager.addChannel(uri , ctx.channel());
         DynCarInstance.getDynCarMap().put(uri , new ConcurrentLinkedQueue<>());
 

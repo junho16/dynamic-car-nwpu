@@ -31,12 +31,6 @@ public class CPSKafkaConsumer {
     @Resource(name = "cpsInstance")
     private CPSInstance cpsInstance;
 
-    @Resource
-    private KafkaProducer kafkaProducer;
-
-    @Value("${topic.dyncarProperty}")
-    private String topicDevicePropertyTopic;
-
     /**
      * 设备事件消息转发至CPS
      *

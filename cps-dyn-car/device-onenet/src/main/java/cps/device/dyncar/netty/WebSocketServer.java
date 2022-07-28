@@ -29,17 +29,6 @@ public class WebSocketServer implements CommandLineRunner {
     @Value("${websocket.server.port}")
     private Integer port;
 
-//    @PostConstruct
-//    public void init(){
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                initServer();
-//            }
-//        }).run();
-////        this.initServer();
-//    }
-
     @Value("${dyncarNumLimit}")
     private Integer dyncarNumLimit;
 
@@ -63,7 +52,6 @@ public class WebSocketServer implements CommandLineRunner {
             t.run();
 
             channel.closeFuture().sync();
-
 
         } catch (InterruptedException e) {
             e.printStackTrace();
