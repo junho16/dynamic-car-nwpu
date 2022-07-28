@@ -37,20 +37,6 @@ public class CPSKafkaConsumer {
     @Value("${topic.dyncarProperty}")
     private String topicDevicePropertyTopic;
 
-    @PostConstruct
-    public void setLog(){
-        while (true){
-            //FIXME testMQ
-            kafkaProducer.send(topicDevicePropertyTopic,  "111");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
     /**
      * 设备事件消息转发至CPS
      *
@@ -64,10 +50,7 @@ public class CPSKafkaConsumer {
         if (message.isPresent()) {
             Object msg = message.get();
             try {
-                log.info(" 4 ==> MSG:{}" , msg.toString());
-
-                //FIXME testMQ
-                kafkaProducer.send(topicDevicePropertyTopic,  "111");
+//                log.info(" 实时车辆CPS ==> MSG:{}" , msg.toString());
 
                 // 此处需要根据传递来的消息中的uuid查询到对应的设备元数据meta;
                 JSONObject msgJson = JSONObject.parseObject(msg.toString());

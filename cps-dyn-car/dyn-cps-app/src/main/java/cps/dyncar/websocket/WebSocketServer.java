@@ -13,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-@ServerEndpoint("/cps/car/ws/{sid}")
+@ServerEndpoint("/cps/dyncar/ws/{sid}")
 public class WebSocketServer {
     private static final Logger log = LoggerFactory.getLogger(WebSocketServer.class);
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。

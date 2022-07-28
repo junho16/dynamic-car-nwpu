@@ -10,7 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WSDataDTO {
+
+    private String type;
+
     private Long timeStamp;
-    private String did; // 设备序列号
-    private List<CarDTO> vehicles;
+
+    private List<DynCarDTO> cars;
 }

@@ -9,18 +9,16 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CarListStruct {
+public class DynCarListStruct {
 
-  private String carId;
+  private String rid;
 
-  private double latitude;
+  private Double lon;
 
-  private double longitude;
+  private Double lat;
 
-  private double speed;
+  private Double speed;
 
-  private int lane;
-
-  private double distanceToLine;
+  private Long ts;
 
 }
