@@ -12,3 +12,6 @@ logging:
         security: WARN
         web: WARN
     cps: debug
+
+topic:
+  dyncarProperty: topic.dyncar

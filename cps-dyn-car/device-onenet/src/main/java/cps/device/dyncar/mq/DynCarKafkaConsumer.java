@@ -17,9 +17,10 @@ public class DynCarKafkaConsumer {
     /**
      * 接收到cpsapp处理之后的消息 识别并在对应的channel中发送到终端
      */
-    @KafkaListener(topics = "${topic.oneNetBridge.deviceProperty}")
+    @KafkaListener(topics = "${topic.dyncarProperty}" , groupId = "dyncar")
     public void eventTopicConsumer(String message) {
-//        log.info("message: {}" , message) ;
+
+        log.info("Netty通过MQ接收到消息message: {}" , message) ;
 //        if(!StringUtils.isBlank(message)){
 //            JSONObject msgJson = JSONObject.parseObject(message);
 //            log.info(msgJson.toJSONString());

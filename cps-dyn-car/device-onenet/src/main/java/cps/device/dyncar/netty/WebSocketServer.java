@@ -8,6 +8,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,15 +23,22 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class WebSocketServer {
+@Order(value = 1)
+public class WebSocketServer implements CommandLineRunner {
 
     @Value("${websocket.server.port}")
     private Integer port;
 
-    @PostConstruct
-    public void init(){
-        this.initServer();
-    }
+//    @PostConstruct
+//    public void init(){
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                initServer();
+//            }
+//        }).run();
+////        this.initServer();
+//    }
 
     @Value("${dyncarNumLimit}")
     private Integer dyncarNumLimit;
@@ -37,11 +48,11 @@ public class WebSocketServer {
 
     private void initServer(){
         log.info("正在启动websocket服务器");
-        NioEventLoopGroup boss=new NioEventLoopGroup();
-        NioEventLoopGroup work=new NioEventLoopGroup();
+        NioEventLoopGroup boss = new NioEventLoopGroup();
+        NioEventLoopGroup work = new NioEventLoopGroup();
         try {
-            ServerBootstrap bootstrap=new ServerBootstrap();
-            bootstrap.group(boss,work);
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            bootstrap.group(boss , work);
             bootstrap.channel(NioServerSocketChannel.class);
             bootstrap.childHandler(new WebSocketChannelInitializer());
 
@@ -62,6 +73,12 @@ public class WebSocketServer {
             work.shutdownGracefully();
             log.info("websocket服务器已关闭");
         }
+    }
+
+    @Async
+    @Override
+    public void run(String... args) throws Exception {
+        initServer();
     }
 //  NettyUtil.initServer(8080, () -> {
 //        List<ChannelHandler> handlers = new ArrayList<>();

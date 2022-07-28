@@ -1,5 +1,7 @@
 server:
   port: 9092
+
+
 devices:
   bean:
     url: tcp://218.201.45.7:1883
@@ -15,8 +17,29 @@ websocket:
 #最大实时车辆容量（系统车辆最大容量）
 dyncarNumLimit: 10
 
+spring:
+  kafka:
+    bootstrap-servers: 172.16.20.64:9092,172.16.20.64:9093
+    producer:
+      retries: 0
+      batch-size: 16384
+      buffer-memory: 33554432
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: 1
+    consumer:
+      auto-commit-interval: 1S
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      concurrency: 5
+      ack-mode: manual_immediate
+      missing-topics-fatal: false
 topic:
-  dyncarProperty: topic.dyncarProperty
+  dyncarProperty: topic.dyncar
+
 #  ======================
 
 #devices:
