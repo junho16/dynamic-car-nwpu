@@ -32,7 +32,7 @@ public class DynCarCPSApplication {
     }
 
     /**
-     * 创建机房实例
+     * 创建实时车辆cps实例
      * @param cpsEntityFactory
      * @return
      */

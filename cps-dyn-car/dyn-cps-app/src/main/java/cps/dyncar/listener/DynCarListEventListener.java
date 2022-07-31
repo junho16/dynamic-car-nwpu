@@ -9,8 +9,13 @@ import cps.dyncar.AlgorithmUtils.Guidance;
 import cps.dyncar.dto.DynCarDTO;
 import cps.dyncar.dto.DynCarListStruct;
 import cps.dyncar.dto.WSDataDTO;
+import cps.dyncar.entity.DetectorMeta;
 import cps.dyncar.entity.DynCarCPSInstance;
 import cps.dyncar.kafka.KafkaProducer;
+import cps.dyncar.mqtt.tian.TianMqttClient;
+import cps.dyncar.service.CrossingService;
+import cps.dyncar.service.DisTanceService;
+import cps.dyncar.service.DyncarService;
 import cps.dyncar.websocket.WebSocketServer;
 import cps.runtime.api.entity.imp.RedisCPSInstance;
 import cps.runtime.api.service.imp.SpringContextHolder;
@@ -41,6 +46,16 @@ public class DynCarListEventListener extends CPSEventListener<DynCarCPSInstance>
     private final KafkaProducer kafkaProducer = SpringContextHolder.getBean("kafkaProducer");
 
     private final String topicDevicePropertyTopic = SpringContextHolder.getProperty("topic.dyncarProperty");
+
+    private final DyncarService dyncarService = SpringContextHolder.getBean("dyncarService");
+
+    private final CrossingService crossingService = SpringContextHolder.getBean("crossingService");
+
+    private final TianMqttClient tianMqttClient = SpringContextHolder.getBean("tianMqttClient");
+
+    private final DisTanceService disTanceService = SpringContextHolder.getBean("disTanceService");
+
+
 
     // Redis主机
     private final String redisHost = SpringContextHolder.getProperty("spring.redis.host");
@@ -85,13 +100,23 @@ public class DynCarListEventListener extends CPSEventListener<DynCarCPSInstance>
                     Map<String, DynCarDTO> carDTOMap = new ConcurrentHashMap<>();
                     for (DynCarListStruct car : dyncars) {
                         if (!carDTOMap.containsKey(car.getRid())) {
-                            String suggest = "";
-                            try {
-                                suggest = "按原速行驶";
-//                                suggest = Guidance.getSuggest((int) car.getDistanceToLine(), (int) car.getSpeed(), trafficLight.getColor(), trafficLight.getLeftTime());
-                                System.out.println(car + " " + suggest);
-                            } catch (Exception e) {
+                            String posInfo = dyncarService.getPosInfo( car.getLon(), car.getLat());
+                            String suggest = posInfo.equals("")?"":"目前位置："+posInfo+";";
+                            DetectorMeta detectorMeta = crossingService.getMinDisDetector(car.getLon() , car.getLat());
+                            try{
+                                if(detectorMeta != null){
+                                    suggest += Guidance.getSuggest(
+                                            (int) disTanceService.calcDistance(car.getLon() , car.getLat() , detectorMeta.getLight_pos().getLon() , detectorMeta.getLight_pos().getLat())   ,
+                                            (int) Integer.parseInt(car.getSpeed()+""),
+                                            tianMqttClient.getLightMap().get(detectorMeta.getLight_sn()).getColor(),
+                                            tianMqttClient.getLightMap().get(detectorMeta.getLight_sn()).getLeftTime()
+                                    );
+                                }else{
+                                    suggest += "按照原速度行驶";
+                                }
+                            }catch (Exception e){
                                 e.printStackTrace();
+                                logger.error("检测车辆{}路口的行驶情况失败：{}",car.getRid() , e.getMessage());
                             }
                             DynCarDTO carDTO = new DynCarDTO(
                                 car.getRid(),

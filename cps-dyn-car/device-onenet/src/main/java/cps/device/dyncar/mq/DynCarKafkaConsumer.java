@@ -46,7 +46,7 @@ public class DynCarKafkaConsumer {
                         log.info("map key:{} ;map value:{}" , entry.getKey() , entry.getValue());
                     }
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+                    SimpleDateFormat sdf = new SimpleDateFormat("YY:MM:DD HH:mm:ss");
                     car.setTime(sdf.format(new Date(Long.parseLong(String.valueOf(car.getTs())))));
 
                     Channel channel = DynCarChannelManager.findChannel(car.getRid());

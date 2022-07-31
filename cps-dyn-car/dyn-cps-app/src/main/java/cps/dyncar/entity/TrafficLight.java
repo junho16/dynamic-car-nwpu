@@ -12,11 +12,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TrafficLight {
-    private Double latitude;
-
-    private Double longitude;
 
     private Integer color;
 
     private Integer leftTime;
+
+    public void setTrafficInfo(Integer color , Integer leftTime){
+        this.color = color;
+        this.leftTime = leftTime;
+    }
+
 }
