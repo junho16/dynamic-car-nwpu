@@ -7,7 +7,10 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Junho
@@ -43,6 +46,10 @@ public class WebSocketChannelInitializer extends ChannelInitializer<SocketChanne
         ch.pipeline().addLast("handler",new WebSocketHandler());
 
 //        ch.pipeline().addLast(new WebSocketServerProtocolHandler(WEB_SOCKET_LINKURL, null, true, 10485760));
+
+        ch.pipeline().addLast(new IdleStateHandler(60, 60, 60, TimeUnit.MINUTES));
+
+        ch.pipeline().addLast(new HreatBeatServerHandler());
 
     }
 

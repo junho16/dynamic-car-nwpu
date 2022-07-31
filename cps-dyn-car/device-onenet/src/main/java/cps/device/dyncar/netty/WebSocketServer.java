@@ -68,20 +68,4 @@ public class WebSocketServer implements CommandLineRunner {
     public void run(String... args) throws Exception {
         initServer();
     }
-//  NettyUtil.initServer(8080, () -> {
-//        List<ChannelHandler> handlers = new ArrayList<>();
-//        // 将请求和应答消息编码或解码为 HTTP 消息
-//        handlers.add(new HttpServerCodec());
-//        // 将 HTTP 消息多个部分组合成一个完整的 HTTP 消息
-//        handlers.add(new HttpObjectAggregator(65536));
-//        // 支持浏览器和服务端进行 WebSocket 通信
-//        handlers.add(new ChunkedWriteHandler());
-//        // 进行设置心跳检测
-//        handlers.add(new IdleStateHandler(10, 60, 20, TimeUnit.SECONDS));
-//        handlers.add(new WebSocketHandler());
-//        return handlers;
-//    });
-//————————————————
-//    版权声明：本文为CSDN博主「孟诸」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-//    原文链接：https://blog.csdn.net/qq_35930102/article/details/124914187
 }
