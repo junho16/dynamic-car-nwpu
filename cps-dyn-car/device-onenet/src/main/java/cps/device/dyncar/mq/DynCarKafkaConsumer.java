@@ -42,9 +42,9 @@ public class DynCarKafkaConsumer {
                 for(DynCarDTO car : list){
 
                     ConcurrentMap<String, Channel> channelConcurrentMap = DynCarChannelManager.getChannelMap();
-                    for(Map.Entry<String, Channel> entry : channelConcurrentMap.entrySet()){
-                        log.info("map key:{} ;map value:{}" , entry.getKey() , entry.getValue());
-                    }
+//                    for(Map.Entry<String, Channel> entry : channelConcurrentMap.entrySet()){
+//                        log.info("map key:{} ;map value:{}" , entry.getKey() , entry.getValue());
+//                    }
 
                     SimpleDateFormat sdf = new SimpleDateFormat("YY:MM:DD HH:mm:ss");
                     car.setTime(sdf.format(new Date(Long.parseLong(String.valueOf(car.getTs())))));

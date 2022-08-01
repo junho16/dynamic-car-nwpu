@@ -69,7 +69,7 @@ public class DynCarSubInfoTask implements Runnable{
                 dyncarList.add(entry.getValue().poll());
             }
         }
-        for(int idx = 0 , j = 0 ; idx < dyncarNumLimit && dyncarList.size() > 0 ;  idx++ , j = (j + 1) % dyncarList.size()){
+        for(int idx = 0 , j = 0 ; idx < dyncarNumLimit && dyncarList.size() > 0 ; j = (j + 1) % dyncarList.size()){
             DynCarListStructDTO car = new DynCarListStructDTO(
                 dyncarList.get(j).getRid(),
                 dyncarList.get(j).getLon(),
@@ -77,7 +77,7 @@ public class DynCarSubInfoTask implements Runnable{
                 dyncarList.get(j).getSpeed(),
                 dyncarList.get(j).getTs()
             );
-            dyncars[idx] = car;
+            dyncars[idx++] = car;
         }
         return dyncars;
     }
