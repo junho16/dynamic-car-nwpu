@@ -18,7 +18,8 @@ import org.springframework.context.annotation.DependsOn;
 @SpringBootApplication
 @ComponentScan({"cps.runtime.api.service.imp","cps.dyncar.*"})
 public class DynCarCPSApplication {
-
+//客户端 ==》netty（接收信息服务端）==》onenet==》iotbridge==》runtime==》cps（路口--》行车建议）==> kafka==>netty（接收信息服务端）==>客户端
+//客户端 ==》netty（接收信息服务端）==>cps(行车建议)==》sam和客户端（行车建议）
     private static final Logger logger = LoggerFactory.getLogger(DynCarCPSApplication.class);
 
     @Reference(check = false)
